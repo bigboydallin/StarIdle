@@ -36,7 +36,7 @@ class Element {
 
 
   get ratio() {
-    return this._created / this._max;
+    return this._created / this.max;
   }
 
   set count(amount) {

@@ -15,11 +15,17 @@ class GameScene extends Phaser.Scene {
     for (let i = 0; i < gameState.layers; i++){
       let maxSize = gameState.max/(2**i)
       gameState.elements.push(new Element(i,maxSize));
+      gameState.stars.push(new Star(this,i));
     }
-    gameState.elements[0].count = gameState.t0Max;
+    gameState.elements[0].count = gameState.max;
+    gameState.elements[1].count = gameState.max/4;
+    gameState.elements[2].count = gameState.max/16;
   }
 
   update() {
     gameState.bg.update()
+    for (let i = 0; i < gameState.layers; i++){
+      gameState.stars[i].update();
+    }
   }
 }
