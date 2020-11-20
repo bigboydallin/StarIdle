@@ -1,5 +1,7 @@
 const gameState = {
-  layers: 14
+  layers: 14,
+  eleRatio: 2,
+  elements: []
 }
 
 const config = {

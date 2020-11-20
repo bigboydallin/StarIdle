@@ -1,4 +1,4 @@
-class StarBackround {
+class StarBackground {
   constructor(scene) {
     this.starCount = 1000;
     this.maxSize = 4;
