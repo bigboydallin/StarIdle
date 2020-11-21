@@ -25,13 +25,21 @@ class GameScene extends Phaser.Scene {
     // these are for testing
     gameState.elements[1].count = gameState.max/4;
     gameState.elements[2].count = gameState.max/16;
+    //add power
+    gameState.power = new Power;
+    gameState.panels.push(new PowerPanel(this));
   }
 
   update() {
+    //update background
     gameState.bg.update()
+    // update stars
     for (let i = 0; i < gameState.layers; i++){
       gameState.stars[i].update();
-      gameState.panels[i].update();
+    }
+    // update panels
+    for (let i = 0; i < gameState.panels.length; i++){
+      gameState.panels[i].update()
     }
   }
 }

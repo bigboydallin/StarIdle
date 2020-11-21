@@ -31,3 +31,28 @@ class ElementPanel extends Panel{
     this.infoText.setText(text);
   }
 }
+
+class PowerPanel extends Panel{
+
+  constructor(scene){
+    let height = 50;
+    let width = 200;
+    super(scene,game.canvas.width/2,game.canvas.height*5/6,width,height);
+    this.height = height;
+    this.width = width;
+    this.infoText = scene.add.text(game.canvas.width/2,this.plate.y,"",{color: 0xffffff});
+  }
+
+  update(){
+    let x = game.canvas.width/2;
+    let y = game.canvas.height*5/6;
+    this.plate.x = x;
+    this.plate.y = y;
+    this.infoText.x = x;
+    this.infoText.y = y;
+    let text = (
+      `${gameState.power.unallocated}/${gameState.power.existing}`
+    )
+    this.infoText.setText(text);
+  }
+}
