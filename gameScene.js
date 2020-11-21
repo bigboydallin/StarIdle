@@ -10,8 +10,10 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
+    gameState.delta = 0;
+    gameState.speed = 100;
     gameState.bg = new StarBackground(this);
-    gameState.max = 2**(gameState.layers-1) * 100
+    gameState.max = 2**(gameState.layers-1) * 10
     for (let i = 0; i < gameState.layers; i++){
       let maxSize = gameState.max/(2**i)
       //add element
@@ -20,17 +22,22 @@ class GameScene extends Phaser.Scene {
       gameState.stars.push(new Star(this,i));
       //add display panel
       gameState.panels.push(new ElementPanel(this,i));
+      //add converter
+      //add converter panel
+    }
+    for (let i = 0; i < gameState.layers-1; i++){
+      gameState.converters.push(new Converter(i));
     }
     gameState.elements[0].count = gameState.max;
     // these are for testing
-    gameState.elements[1].count = gameState.max/4;
-    gameState.elements[2].count = gameState.max/16;
     //add power
     gameState.power = new Power;
     gameState.panels.push(new PowerPanel(this));
+    gameState.converters[0].allocate(1);
   }
 
-  update() {
+  update(time,delta) {
+    gameState.delta += delta;
     //update background
     gameState.bg.update()
     // update stars
@@ -41,5 +48,15 @@ class GameScene extends Phaser.Scene {
     for (let i = 0; i < gameState.panels.length; i++){
       gameState.panels[i].update()
     }
+    //update power
+    gameState.power.setPower()
+    while (gameState.delta > gameState.speed){
+      //activate converters
+      gameState.delta -= gameState.speed;
+      for (let i = 0; i < gameState.converters.length; i++){
+        gameState.converters[i].update()
+      }
+    }
+    gameState.converters[1].allocate(1);
   }
 }

@@ -58,7 +58,7 @@ class Element {
 
   increment(amount) {
     //increases the count and created by amount
-    if (amount > 0 && amount + this._count <= this._max) {
+    if (amount > 0 && amount + this._count <= this.max) {
       this._count += amount;
       this._created += amount;
       return true;
@@ -75,7 +75,7 @@ class Element {
 
   decrement(amount) {
     //decreases count by amount
-    if (amount > 0 && (this.count - amount) >= 0) {
+    if (amount > 0 && (this._count - amount) >= 0) {
       this._count -= amount;
       return true;
     }

@@ -12,17 +12,18 @@ class Power {
     return this.allocated + this.unallocated;
   }
 
-  allocate(amount,device){
-    let realAmount = Math.min(amount,this.unallocated);
-    device.allocate(realAmount);
-    this.unallocated -= realAmount;
-    this.allocated += realAmount;
+  allocate(amount){
+    let total = Math.min(amount,this.unallocated)
+    this.allocated += total;
+    this.unallocated -= total;
+    return total;
   }
 
   deallocate(amount,device){
-    let realAmount = device.deallocate(amount);
-    this.unallocated += realAmount;
-    this.allocated -= realAmount;
+    let total = Math.min(amount,this.allocated)
+    this.allocated -= total;
+    this.unallocated += total;
+    return total;
   }
 
   freePower(amount){

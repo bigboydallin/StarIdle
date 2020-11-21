@@ -25,7 +25,7 @@ class ElementPanel extends Panel{
       `${this.tier},`+
       `${gameState.elements[this.tier].name}: `+
       `${gameState.elements[this.tier].amount}/`+
-      `${gameState.elements[this.tier].amount}/`+
+      `${gameState.elements[this.tier].created}/`+
       `${gameState.elements[this.tier].max}`
     )
     this.infoText.setText(text);
