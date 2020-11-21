@@ -48,6 +48,10 @@ class Element {
     return this._created
   }
 
+  get amount(){
+    return this._count
+  }
+
   get visible() {
     return this._created > 0;
   }
