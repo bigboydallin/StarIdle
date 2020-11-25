@@ -6,7 +6,8 @@ class GameScene extends Phaser.Scene {
   }
 
   preload() {
-
+    this.load.image('plus','assets/plus.png')
+    this.load.image('minus','assets/minus.png')
   }
 
   create() {
@@ -32,7 +33,6 @@ class GameScene extends Phaser.Scene {
     gameState.power = new Power;
     gameState.panels.push(new PowerPanel(this));
     //testing
-    gameState.converters[0].allocate(1);
   }
 
   update(time,delta) {
@@ -56,6 +56,5 @@ class GameScene extends Phaser.Scene {
         gameState.converters[i].update()
       }
     }
-    gameState.converters[1].allocate(1);
   }
 }

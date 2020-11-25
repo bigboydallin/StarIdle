@@ -36,8 +36,9 @@ class StarBackground {
         this.stars[i].y += this.height + 10;
       }
       //scaleStar
-      if (Math.random() > .9)
-      this.stars[i].setScale(Math.random()/3 + 0.75)
+      if (Math.random() > .9){
+        this.stars[i].setScale(Math.random()/3 + 0.75)
+      }
     }
   }
 }

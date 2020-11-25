@@ -14,8 +14,10 @@ class Machine {
 
   deallocate(amount) {
     let total = Math.min(amount, this.currentPower);
+    console.log(total)
     let deallocated = gameState.power.deallocate(total);
-    this.currentPower += deallocated;
+    console.log(deallocated)
+    this.currentPower -= deallocated;
     return deallocated;
   }
 }

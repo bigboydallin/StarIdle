@@ -70,27 +70,43 @@ class ConverterPanel extends Panel {
     this.outline = scene.add.rectangle(0, tier * height + height / 2, width / 3, height - 15);
     this.outline.setStrokeStyle(1, 0)
     this.bar = scene.add.rectangle(0, tier * height + height / 2, width / 3, height - 15, 0);
+    // add scprites
+    this.plus = scene.add.sprite(0, tier * height + height / 2, 'plus').setInteractive()
+    this.minus = scene.add.sprite(0, tier * height + height / 2, 'minus').setInteractive()
+    this.plus.on('pointerdown', function() {gameState.converters[tier].allocate(1)});
+    this.minus.on('pointerdown', function() {gameState.converters[tier].deallocate(1)});
     this.tier = tier;
     this.height = height;
     this.width = width;
     this.infoText = scene.add.text(0, this.plate.y, "", {
       color: 0xffffff
     });
+    this.infoText2 =  scene.add.text(0, this.plate.y, "", {
+      color: 0xffffff
+    });
+  }
+
+  allocate(){
+    gameState.converters[this.tier].allocate(1);
   }
 
   update() {
     // update text
     let text = (
-      `${gameState.elements[this.tier].name}: `
+      `${gameState.elements[this.tier].name} `
     );
     this.infoText.setText(text)
+    this.infoText2.setText(`${gameState.converters[this.tier].currentPower}`)
     // adjust x
     this.plate.x = game.canvas.width - this.width / 2;
     this.infoText.x = game.canvas.width - this.width + 10;
+    this.infoText2.x = game.canvas.width - this.width/2 - 20;
     this.outline.x = game.canvas.width - this.width / 5;
     this.bar.x = game.canvas.width - this.width / 5;
+    this.plus.x = game.canvas.width - this.width / 2 + 20;
+    this.minus.x = game.canvas.width - this.width * 3 / 4 + 35;
     // update progress bar
     let converter = gameState.converters[this.tier]
-    this.bar.width = this.width*converter.progress / converter.speed / 3
+    this.bar.width = this.width * converter.progress / converter.speed / 3
   }
 }
