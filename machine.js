@@ -27,7 +27,7 @@ class Converter extends Machine {
     this.tier = tier;
     this.ratio = 2;
     this.progress = 0;
-    this.speed = 2;
+    this.speed = 2**tier+1;
     this.multiplier = 3;
   }
 

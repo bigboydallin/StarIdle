@@ -11,7 +11,7 @@ class GameScene extends Phaser.Scene {
 
   create() {
     gameState.delta = 0;
-    gameState.speed = 100;
+    gameState.speed = 300;
     gameState.bg = new StarBackground(this);
     gameState.max = 2**(gameState.layers-1) * 10
     for (let i = 0; i < gameState.layers; i++){
@@ -22,17 +22,16 @@ class GameScene extends Phaser.Scene {
       gameState.stars.push(new Star(this,i));
       //add display panel
       gameState.panels.push(new ElementPanel(this,i));
-      //add converter
-      //add converter panel
     }
     for (let i = 0; i < gameState.layers-1; i++){
       gameState.converters.push(new Converter(i));
+      gameState.panels.push(new ConverterPanel(this,i))
     }
     gameState.elements[0].count = gameState.max;
-    // these are for testing
     //add power
     gameState.power = new Power;
     gameState.panels.push(new PowerPanel(this));
+    //testing
     gameState.converters[0].allocate(1);
   }
 
