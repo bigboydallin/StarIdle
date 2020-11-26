@@ -17,20 +17,38 @@ class ElementPanel extends Panel {
     this.height = height;
     this.width = width;
     this.tier = tier;
-    this.infoText = scene.add.text(10, this.plate.y, "", {
-      color: 0xffffff
-    });
+    this.createInfoTexts(scene);
+  }
+
+  createInfoTexts(scene){
+    this.infoTexts = {};
+    let tier = this.tier
+    let tierF = function() {return `${tier}`};
+    this.infoTexts.tier = new InfoText(scene,5,this.plate.y,tierF,0xffffff);
+    let nameF = function() {return `${gameState.elements[tier].name}: `};
+    this.infoTexts.name = new InfoText(scene,20,this.plate.y,nameF,0xffffff);
+    let amountF = function() {return `${gameState.elements[tier].amount}`};
+    this.infoTexts.amount = new InfoText(scene,120,this.plate.y,amountF,0xffffff);
+    let createdF = function() {return `${gameState.elements[tier].created}`};
+    this.infoTexts.created = new InfoText(scene,195,this.plate.y,createdF,0xffffff);
+    let maxF = function() {return `${gameState.elements[tier].max}`};
+    this.infoTexts.max = new InfoText(scene,270,this.plate.y,createdF,0xffffff);
   }
 
   update() {
-    let text = (
-      `${this.tier},` +
-      `${gameState.elements[this.tier].name}: ` +
-      `${gameState.elements[this.tier].amount}/` +
-      `${gameState.elements[this.tier].created}/` +
-      `${gameState.elements[this.tier].max}`
-    )
-    this.infoText.setText(text);
+    this.infoTexts.tier.update()
+    this.infoTexts.name.update()
+    this.infoTexts.amount.update()
+    this.infoTexts.created.update()
+    this.infoTexts.max.update()
+    // let text = (
+    //   `${this.tier},` +
+    //   `${gameState.elements[this.tier].name}: ` +
+    //   `${gameState.elements[this.tier].amount}/` +
+    //   `${gameState.elements[this.tier].created}/` +
+    //   `${gameState.elements[this.tier].max}`
+    // )
+    // this.infoText.setText(text);
   }
 }
 
