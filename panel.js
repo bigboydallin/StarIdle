@@ -44,7 +44,7 @@ class PowerPanel extends Panel {
     this.width = width;
     let power = function() {
       return `Power ${gameState.power.unallocated} / `+
-      `${gameState.power.unallocated}`
+      `${gameState.power.max}`
     }
     this.infoText = new InfoText(scene,0,this.plate.y,power,0xffffff);
   }
