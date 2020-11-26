@@ -37,6 +37,9 @@ class Converter extends Machine {
       this.convert();
       this.progress -= this.speed;
     }
+    if (this.currentPower == 0){
+      this.progress = 0;
+    }
   }
 
   convert(){

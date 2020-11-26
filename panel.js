@@ -32,7 +32,7 @@ class ElementPanel extends Panel {
     let createdF = function() {return `${gameState.elements[tier].created}`};
     this.infoTexts.created = new InfoText(scene,195,this.plate.y,createdF,0xffffff);
     let maxF = function() {return `${gameState.elements[tier].max}`};
-    this.infoTexts.max = new InfoText(scene,270,this.plate.y,createdF,0xffffff);
+    this.infoTexts.max = new InfoText(scene,270,this.plate.y,maxF,0xffffff);
   }
 
   update() {
