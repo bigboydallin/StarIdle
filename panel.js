@@ -162,6 +162,14 @@ class Button {
   set y(value) {
     this.sprite.y = value;
   }
+
+  get visible(){
+    return this.sprite.visible;
+  }
+
+  set visible(value){
+    this.sprite.visible = value;
+  }
 }
 
 class InfoText {

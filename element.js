@@ -87,7 +87,6 @@ class Element {
   spend(amount) {
     //decreases count and created by amount and converts it to targetEle
     let targetEle = gameState.elements[this.target];
-    console.log(targetEle);
     if (this.tier > targetEle.tier) {
       if (amount > 0 && this._count - amount >= 0) {
         this._count -= amount;

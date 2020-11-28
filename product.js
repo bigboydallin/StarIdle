@@ -2,11 +2,11 @@
 
 class Product {
 
-  constructor(cost,effect,prereq = () => {return true}) {
+  constructor(cost, effect, prereq = () => {
+    return true
+  }) {
     this.cost = cost;
-    this.effect = () => {
-      console.log("effect");
-    };
+    this.effect = effect;
     this.prereq;
     this.purchased = false;
   }
@@ -42,12 +42,44 @@ class Product {
 
 }
 
-class Upgrade extends Product{
+class Upgrade extends Product {
 
-  constructor(scene,name,cost,effect,image){
-    super(cost,effect);
+  constructor(scene, name, cost, effect, image) {
+    super(cost, effect);
     this.name = name;
-    let bEffect = () => {gameState.upgrades[name].purchase()}
-    this.button = new Button(scene,390,30,image,bEffect);
+    let bEffect = () => {
+      gameState.upgrades[name].purchase()
+    }
+    this.button = new Button(scene, 390, 30, image, bEffect);
+  }
+
+  get x(){
+    return this.button.x;
+  }
+
+  set x(value){
+    this.button.x = value;
+  }
+
+  get y(){
+    return this.button.y;
+  }
+
+  set y(value){
+    this.button.y = value;
+  }
+
+  get visible(){
+    return this.button.visible;
+  }
+
+  set visible(value){
+    this.button.visible = value;
+  }
+
+  purchase(){
+    if (super.purchase()){
+      this.visible = false;
+    }
   }
 }
