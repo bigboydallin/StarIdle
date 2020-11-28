@@ -8,6 +8,7 @@ class GameScene extends Phaser.Scene {
   preload() {
     this.load.image('plus', 'assets/plus.png')
     this.load.image('minus', 'assets/minus.png')
+    this.load.image('upgrade-temp', 'assets/upgrade-temp.png')
   }
 
   create() {
@@ -18,6 +19,9 @@ class GameScene extends Phaser.Scene {
     this.createElements();
     this.createConverters();
     this.createPower();
+    gameState.upgrades = {};
+    let effect = () => {console.log('purchased')}
+    gameState.upgrades['temp'] = new Upgrade(this,'temp',{1:10},effect,'upgrade-temp')
   }
 
   createElements() {

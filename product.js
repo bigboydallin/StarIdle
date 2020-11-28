@@ -2,8 +2,7 @@
 
 class Product {
 
-  constructor(cost) {
-    this.name;
+  constructor(cost,effect,prereq = () => {return true}) {
     this.cost = cost;
     this.effect = () => {
       console.log("effect");
@@ -41,5 +40,14 @@ class Product {
     return false;
   }
 
+}
 
+class Upgrade extends Product{
+
+  constructor(scene,name,cost,effect,image){
+    super(cost,effect);
+    this.name = name;
+    let bEffect = () => {gameState.upgrades[name].purchase()}
+    this.button = new Button(scene,390,30,image,bEffect);
+  }
 }
