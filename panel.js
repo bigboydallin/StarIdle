@@ -22,17 +22,30 @@ class ElementPanel extends Panel {
 
   createInfoTexts(scene){
     this.infoTexts = {};
+    let style = {color: 0xffffff, fontSize: '15px'}
     let tier = this.tier
-    let tierF = function() {return `${tier}`};
-    this.infoTexts.tier = new InfoText(scene,5,this.plate.y,tierF,0xffffff);
-    let nameF = function() {return `${gameState.elements[tier].name}: `};
-    this.infoTexts.name = new InfoText(scene,20,this.plate.y,nameF,0xffffff);
-    let amountF = function() {return `${gameState.elements[tier].amount}`};
-    this.infoTexts.amount = new InfoText(scene,120,this.plate.y,amountF,0xffffff);
-    let createdF = function() {return `${gameState.elements[tier].created}`};
-    this.infoTexts.created = new InfoText(scene,195,this.plate.y,createdF,0xffffff);
-    let maxF = function() {return `${gameState.elements[tier].max}`};
-    this.infoTexts.max = new InfoText(scene,270,this.plate.y,maxF,0xffffff);
+    let tierF = function() {return `${tier+1}`};
+    this.infoTexts.tier = new InfoText(scene,4,this.plate.y,tierF,style);
+    let nameF = function() {return `${gameState.elements[tier].name}`};
+    this.infoTexts.name = new InfoText(scene,25,this.plate.y,nameF,style);
+    let amountF = function() {
+      if (gameState.elements[tier].amount < 10000){
+          return `${gameState.elements[tier].amount}`
+      }
+      return `${gameState.elements[tier].amount.toPrecision(3)}`};
+    this.infoTexts.amount = new InfoText(scene,120,this.plate.y,amountF,style);
+    let createdF = function() {
+      if (gameState.elements[tier].created < 10000){
+          return `${gameState.elements[tier].created}`
+      }
+      return `${gameState.elements[tier].created.toPrecision(3)}`};
+    this.infoTexts.created = new InfoText(scene,195,this.plate.y,createdF,style);
+    let maxF = function() {
+      if (gameState.elements[tier].max < 10000){
+          return `${gameState.elements[tier].max}`
+      }
+      return `${gameState.elements[tier].max.toPrecision(3)}`};
+    this.infoTexts.max = new InfoText(scene,270,this.plate.y,maxF,style);
   }
 
   update() {
@@ -41,14 +54,6 @@ class ElementPanel extends Panel {
     this.infoTexts.amount.update()
     this.infoTexts.created.update()
     this.infoTexts.max.update()
-    // let text = (
-    //   `${this.tier},` +
-    //   `${gameState.elements[this.tier].name}: ` +
-    //   `${gameState.elements[this.tier].amount}/` +
-    //   `${gameState.elements[this.tier].created}/` +
-    //   `${gameState.elements[this.tier].max}`
-    // )
-    // this.infoText.setText(text);
   }
 }
 
@@ -64,7 +69,7 @@ class PowerPanel extends Panel {
       return `Power ${gameState.power.unallocated} / `+
       `${gameState.power.max}`
     }
-    this.infoText = new InfoText(scene,0,this.plate.y,power,0xffffff);
+    this.infoText = new InfoText(scene,0,this.plate.y,power);
   }
 
   update() {
@@ -101,11 +106,11 @@ class ConverterPanel extends Panel {
     let elementNameF = function() {
       return `${gameState.elements[tier].name} `
     };
-    this.infoTexts.name = new InfoText(scene, 0, y, elementNameF, 0xffffff);
+    this.infoTexts.name = new InfoText(scene, 0, y, elementNameF);
     let powerF = function() {
       return `${gameState.converters[tier].currentPower}`
     }
-    this.infoTexts.power = (new InfoText(scene, 0, y, powerF, 0xffffff));
+    this.infoTexts.power = (new InfoText(scene, 0, y, powerF));
   }
 
   createButtons(scene) {
@@ -174,10 +179,8 @@ class Button {
 
 class InfoText {
 
-  constructor(scene, x, y, action, color) {
-    this.text = scene.add.text(x, y, "", {
-      color: color
-    });
+  constructor(scene, x, y, action, style = {color: 0xffffff}) {
+    this.text = scene.add.text(x, y, "", style);
     this.action = action;
   }
 
