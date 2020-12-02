@@ -1,5 +1,5 @@
 const gameState = {
-  layers: 8,
+  layers: 10,
   eleRatio: 2,
   elements: [],
   stars: [],

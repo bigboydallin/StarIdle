@@ -31,8 +31,8 @@ class Converter extends Machine {
     this.multiplier = 3;
   }
 
-  update(){
-    this.progress += this.currentPower;
+  update(ratio = 1){
+    this.progress += this.currentPower* ratio;
     while (this.progress > this.speed){
       this.convert();
       this.progress -= this.speed;

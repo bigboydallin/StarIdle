@@ -53,19 +53,13 @@ class GameScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    gameState.delta += delta;
     //update background
     gameState.bg.update();
     this.updateStars();
     this.updatePanels();
     //update power
     gameState.power.setPower()
-    while (gameState.delta > gameState.speed) {
-      //activate converters
-      this.updateConverters();
-      gameState.delta -= gameState.speed;
-
-    }
+    this.updateConverters(delta / gameState.speed)
   }
 
   updateStars(){
@@ -82,10 +76,10 @@ class GameScene extends Phaser.Scene {
     }
   }
 
-  updateConverters(){
+  updateConverters(ratio){
     // update converters
     for (let i = 0; i < gameState.converters.length; i++) {
-      gameState.converters[i].update();
+      gameState.converters[i].update(ratio);
     }
   }
 }

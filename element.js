@@ -25,7 +25,13 @@ class Element {
       "Chlorine",
       "Argon",
       "Potassium",
-      "Calcium"
+      "Calcium",
+      "Scandium",
+      "Titanium",
+      "Vandium",
+      "Chromium",
+      "Manganese",
+      "Iron"
     ]
     this.tier = tier;
     this.max = max;
