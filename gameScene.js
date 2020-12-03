@@ -13,7 +13,7 @@ class GameScene extends Phaser.Scene {
 
   create() {
     gameState.delta = 0;
-    gameState.speed = 300;
+    gameState.speed = 200;
     gameState.bg = new StarBackground(this);
     gameState.max = 2 ** (gameState.layers - 1) * 10;
     this.createElements();
@@ -24,9 +24,9 @@ class GameScene extends Phaser.Scene {
     gameState.upgrades['temp'] = new Upgrade(this,'temp',{1:10},effect,'upgrade-temp')
   }
 
-  createElements() {
+  createElements(start = 0) {
     // creates elements and displays for them
-    for (let i = 0; i < gameState.layers; i++) {
+    for (let i = start; i < gameState.layers; i++) {
       let maxSize = gameState.max / (2 ** i)
       //add element
       gameState.elements.push(new Element(i, maxSize));
@@ -38,9 +38,9 @@ class GameScene extends Phaser.Scene {
     gameState.elements[0].count = gameState.max;
   }
 
-  createConverters() {
+  createConverters(start = 0) {
     //creates converters and displays
-    for (let i = 0; i < gameState.layers - 1; i++) {
+    for (let i = start; i < gameState.layers - 1; i++) {
       gameState.converters.push(new Converter(i));
       gameState.panels.push(new ConverterPanel(this, i))
     }
@@ -60,6 +60,11 @@ class GameScene extends Phaser.Scene {
     //update power
     gameState.power.setPower()
     this.updateConverters(delta / gameState.speed)
+    let layers = gameState.layers;
+    let ele = gameState.elements[layers-1];
+    if (ele.amount == ele.max){
+      this.prestiege()
+    }
   }
 
   updateStars(){
@@ -80,6 +85,24 @@ class GameScene extends Phaser.Scene {
     // update converters
     for (let i = 0; i < gameState.converters.length; i++) {
       gameState.converters[i].update(ratio);
+    }
+  }
+
+  prestiege(){
+    let newLayers = Math.min(26,gameState.layers + 4);
+    let oldLayers = gameState.layers;
+    gameState.layers = newLayers;
+    gameState.max = 2 ** (gameState.layers - 1) * 10;
+    this.createElements(oldLayers);
+    this.createConverters(oldLayers-1);
+    for (let i = 1;i<newLayers;i++){
+      gameState.elements[i].count = 0;
+      gameState.elements[i].updateMax();
+    }
+    gameState.elements[0].count = gameState.max;
+    gameState.elements[0].updateMax()
+    for (let i = 0;i<newLayers-1;i++){
+      gameState.converters[i].deallocate(999);
     }
   }
 }

@@ -109,4 +109,8 @@ class Element {
     return false;
   }
 
+  updateMax(){
+    this.max = gameState.max / 2**this.tier;
+  }
+
 }

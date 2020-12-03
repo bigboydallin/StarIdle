@@ -38,32 +38,35 @@ class Power {
   }
 
   removeUnallocated(amount){
-    if (amount >= this.unallocated){
+    if (amount <= this.unallocated){
       this.unallocated -= amount;
       return amount;
     }
-    let removed = this.unallocated;
+    let removed = amount - this.unallocated;
     this.unallocated = 0;
     return removed;
   }
 
   setPower() {
-    let count = 0;
+    let count = 10;
     for (let i = 0;i<gameState.layers;i++){
       count += gameState.elements[i].ratio * this.scale**i;
     }
     let total = Math.floor(count);
-    if (this.max < total){
-      this.unallocated += total-this.max;
+    // adjust if new total is higher
+    if (total > this.max){
+      this.unallocated += total - this.max;
       this.max = total;
     }
-    if (this.max > total){
-      let debt = this.max -total
-      debt = this.removeUnallocated(debt);
+    // adjust i fnew total is lower
+    if (total < this.max){
+      let debt = this.max - total;
+      debt -= this.removeUnallocated(debt);
       if (debt > 0){
         this.freePower(debt);
-        this.removeUnallocated(debt);
+        debt -= this.removeUnallocated(debt);
       }
+      this.max = total;
     }
   }
 }

@@ -23,7 +23,7 @@ class Machine {
 class Converter extends Machine {
 
   constructor(tier){
-    super(5);
+    super(10);
     this.tier = tier;
     this.ratio = 2;
     this.progress = 0;
