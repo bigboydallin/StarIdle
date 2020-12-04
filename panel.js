@@ -5,6 +5,22 @@ class Panel {
     this.plate.setStrokeStyle(2, 0);
   }
 
+  get x(){
+    return this.plate.x;
+  }
+
+  set x(value){
+    this.plate.x = value;
+  }
+
+  get y(){
+    return this.plate.y;
+  }
+
+  set y(value){
+    this.plate.y = value;
+  }
+
 
 }
 
@@ -18,6 +34,34 @@ class ElementPanel extends Panel {
     this.width = width;
     this.tier = tier;
     this.createInfoTexts(scene);
+  }
+
+  get x(){
+    return this.plate.x;
+  }
+
+  set x(value){
+    let difference = value - this.x;
+    this.plate.x = value;
+    this.infoTexts.tier.x += difference;
+    this.infoTexts.name.x += difference;
+    this.infoTexts.amount.x += difference;
+    this.infoTexts.created.x += difference;
+    this.infoTexts.max.x += difference;
+  }
+
+  get y(){
+    return this.plate.y;
+  }
+
+  set y(value){
+    let difference = value - this.y;
+    this.plate.y = value;
+    this.infoTexts.tier.y += difference;
+    this.infoTexts.name.y += difference;
+    this.infoTexts.amount.y += difference;
+    this.infoTexts.created.y += difference;
+    this.infoTexts.max.y += difference;
   }
 
   createInfoTexts(scene){
@@ -69,16 +113,34 @@ class PowerPanel extends Panel {
       return `Power ${gameState.power.unallocated} / `+
       `${gameState.power.max}`
     }
-    this.infoText = new InfoText(scene,0,this.plate.y,power);
+    this.infoText = new InfoText(scene,this.x-80,this.y,power);
+  }
+
+  get x(){
+    return this.plate.x;
+  }
+
+  set x(value){
+    let difference = value - this.x;
+    this.plate.x = value;
+    this.infoText.x += difference;
+  }
+
+  get y(){
+    return this.plate.y;
+  }
+
+  set y(value){
+    let difference = value - this.y;
+    this.plate.y = value;
+    this.infoText.y += difference;
   }
 
   update() {
     let x = game.canvas.width / 2;
     let y = game.canvas.height * 5 / 6;
-    this.plate.x = x;
-    this.plate.y = y;
-    this.infoText.x = x - 80;
-    this.infoText.y = y;
+    this.x = x;
+    this.y = y;
     this.infoText.update();
   }
 }
@@ -92,53 +154,74 @@ class ConverterPanel extends Panel {
     this.tier = tier;
     this.height = height;
     this.width = width;
-    this.outline = scene.add.rectangle(0, tier * height + height / 2, width / 3, height - 15);
+    this.outline = scene.add.rectangle(this.x +110, tier * height + height / 2, width / 3, height - 15);
     this.outline.setStrokeStyle(1, 0)
-    this.bar = scene.add.rectangle(0, tier * height + height / 2, width / 3, height - 15, 0);
+    this.bar = scene.add.rectangle(this.x +110, tier * height + height / 2, width / 3, height - 15, 0);
     this.createButtons(scene);
     this.createInfoTexts(scene)
+  }
+
+  get x(){
+    return this.plate.x;
+  }
+
+  set x(value){
+    let difference = value - this.x;
+    this.plate.x = value;
+    this.outline.x += difference;
+    this.bar.x += difference;
+    this.infoTexts.name.x += difference;
+    this.infoTexts.power.x += difference;
+    this.plus.x += difference;
+    this.minus.x += difference;
+  }
+
+  get y(){
+    return this.plate.y;
+  }
+
+  set y(value){
+    let difference = value - this.y;
+    this.plate.y = value;
+    this.outline.y += difference;
+    this.bar.y += difference;
+    this.infoTexts.name.y += difference;
+    this.infoTexts.power.y += difference;
+    this.plus.y += difference;
+    this.minus.y += difference;
   }
 
   createInfoTexts(scene) {
     this.infoTexts = {};
     let tier = this.tier;
-    let y = this.plate.y;
     let elementNameF = function() {
       return `${gameState.elements[tier].name} `
     };
-    this.infoTexts.name = new InfoText(scene, 0, y, elementNameF);
+    this.infoTexts.name = new InfoText(scene, this.x-this.width/2 + 5, this.y, elementNameF);
     let powerF = function() {
       return `${gameState.converters[tier].currentPower}`
     }
-    this.infoTexts.power = (new InfoText(scene, 0, y, powerF));
+    this.infoTexts.power = (new InfoText(scene, this.x-18, this.y, powerF));
   }
 
   createButtons(scene) {
-    let y = this.tier * this.height + this.height / 2
     let tier = this.tier;
     let plusAction = function() {
       gameState.converters[tier].allocate(1)
     }
-    this.plus = new Button(scene, 0, y, 'plus', plusAction)
+    this.plus = new Button(scene, this.x+25, this.y, 'plus', plusAction)
     let minusAction = function() {
       gameState.converters[tier].deallocate(1)
     }
-    this.minus = new Button(scene, 0, y, 'minus', minusAction)
+    this.minus = new Button(scene, this.x-50, this.y, 'minus', minusAction)
   }
-
 
   update() {
     // update text
     this.infoTexts.name.update()
     this.infoTexts.power.update()
     // adjust x
-    this.plate.x = game.canvas.width - this.width / 2;
-    this.outline.x = game.canvas.width - this.width / 5;
-    this.bar.x = game.canvas.width - this.width / 5;
-    this.plus.x = game.canvas.width - this.width / 2 + 20;
-    this.minus.x = game.canvas.width - this.width * 3 / 4 + 35;
-    this.infoTexts.name.x = game.canvas.width - this.width + 10;
-    this.infoTexts.power.x = game.canvas.width - this.width / 2 - 20;
+    this.x = game.canvas.width - this.width / 2;
     // update progress bar
     let converter = gameState.converters[this.tier]
     this.bar.width = this.width * converter.progress / converter.speed / 3
