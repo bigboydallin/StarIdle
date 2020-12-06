@@ -22,10 +22,14 @@ class GameScene extends Phaser.Scene {
     gameState.upgrades = {};
     let effect = () => {console.log('purchased')}
     gameState.upgrades['temp'] = new Upgrade(this,'temp',{1:10},effect,'upgrade-temp')
+    // add input
   }
 
   createElements(start = 0) {
     // creates elements and displays for them
+    gameState.panels.push(new ElementPanelLabel(this))
+    let dragPanel = new DragPanel(this,175,400,350);
+    gameState.panels.push(dragPanel)
     for (let i = start; i < gameState.layers; i++) {
       let maxSize = gameState.max / (2 ** i)
       //add element
@@ -33,16 +37,24 @@ class GameScene extends Phaser.Scene {
       //add star visualizer
       gameState.stars.push(new Star(this, i));
       //add display panel
-      gameState.panels.push(new ElementPanel(this, i));
+      let panel = new ElementPanel(this, i);
+      dragPanel.addPanel(panel);
+      gameState.panels.push(panel);
     }
     gameState.elements[0].count = gameState.max;
   }
 
   createConverters(start = 0) {
     //creates converters and displays
+    let dragPanel = new DragPanel(this,175,400,350);
+    gameState.panels.push(new ConverterPanelLabel(this))
+    gameState.panels.push(dragPanel)
+    dragPanel.rightAligned = true;
     for (let i = start; i < gameState.layers - 1; i++) {
       gameState.converters.push(new Converter(i));
-      gameState.panels.push(new ConverterPanel(this, i))
+      let panel = new ConverterPanel(this, i);
+      gameState.panels.push(panel);
+      dragPanel.addPanel(panel);
     }
   }
 
