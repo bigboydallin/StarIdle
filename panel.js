@@ -178,10 +178,10 @@ class PowerPanel extends Panel {
 
 class ConverterPanel extends Panel {
 
-  constructor(scene, tier) {
+  constructor(scene, tier, x) {
     let height = 50;
     let width = 350;
-    super(scene, width / 2, (tier + 1) * height + height / 2, width, height)
+    super(scene,x, (tier + 1) * height + height / 2, width, height)
     this.tier = tier;
     this.height = height;
     this.width = width;

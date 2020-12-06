@@ -27,9 +27,15 @@ class GameScene extends Phaser.Scene {
 
   createElements(start = 0) {
     // creates elements and displays for them
-    gameState.panels.push(new ElementPanelLabel(this))
-    let dragPanel = new DragPanel(this,175,400,350);
-    gameState.panels.push(dragPanel)
+    let dragPanel;
+    if (start ==0){
+      gameState.panels.push(new ElementPanelLabel(this))
+      dragPanel = new DragPanel(this,175,400,350);
+      gameState.dragPanels.elements = dragPanel;
+    }
+    else {
+      dragPanel = gameState.dragPanels.elements;
+    }
     for (let i = start; i < gameState.layers; i++) {
       let maxSize = gameState.max / (2 ** i)
       //add element
@@ -46,13 +52,19 @@ class GameScene extends Phaser.Scene {
 
   createConverters(start = 0) {
     //creates converters and displays
-    let dragPanel = new DragPanel(this,175,400,350);
-    gameState.panels.push(new ConverterPanelLabel(this))
-    gameState.panels.push(dragPanel)
-    dragPanel.rightAligned = true;
+    let dragPanel;
+    if (start == 0){
+      dragPanel = new DragPanel(this,175,400,350);
+      gameState.panels.push(new ConverterPanelLabel(this))
+      gameState.dragPanels.converters = dragPanel;
+      dragPanel.rightAligned = true;
+    }
+    else {
+      dragPanel = gameState.dragPanels.converters;
+    }
     for (let i = start; i < gameState.layers - 1; i++) {
       gameState.converters.push(new Converter(i));
-      let panel = new ConverterPanel(this, i);
+      let panel = new ConverterPanel(this, i, dragPanel.x);
       gameState.panels.push(panel);
       dragPanel.addPanel(panel);
     }
@@ -76,6 +88,10 @@ class GameScene extends Phaser.Scene {
     let ele = gameState.elements[layers-1];
     if (ele.amount == ele.max){
       this.prestiege()
+    }
+    let dragPanel;
+    for (dragPanel of Object.values(gameState.dragPanels)){
+      dragPanel.update();
     }
   }
 

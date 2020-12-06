@@ -4,7 +4,8 @@ const gameState = {
   elements: [],
   stars: [],
   panels: [],
-  converters: []
+  converters: [],
+  dragPanels: {}
 }
 
 const config = {
