@@ -121,6 +121,10 @@ class GameScene extends Phaser.Scene {
     let oldLayers = gameState.layers;
     gameState.layers = newLayers;
     gameState.max = 2 ** (gameState.layers - 1) * 10;
+    let dragPanel;
+    for (dragPanel of Object.values(gameState.dragPanels)){
+      dragPanel.y = dragPanel.startY;
+    }
     this.createElements(oldLayers);
     this.createConverters(oldLayers-1);
     for (let i = 1;i<newLayers;i++){

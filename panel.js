@@ -350,7 +350,7 @@ class DragPanel {
 
   get bottomY() {
     let bottomPanel = this.panels[this.panels.length - 1];
-    return bottomPanel.y + bottomPanel.height / 2;
+    return bottomPanel.y + bottomPanel.height;
   }
 
   addPanel(panel) {
