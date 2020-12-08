@@ -87,7 +87,7 @@ class GameScene extends Phaser.Scene {
     let layers = gameState.layers;
     let ele = gameState.elements[layers-1];
     if (ele.amount == ele.max){
-      this.prestiege()
+      this.prestiege(time)
     }
     let dragPanel;
     for (dragPanel of Object.values(gameState.dragPanels)){
@@ -116,7 +116,8 @@ class GameScene extends Phaser.Scene {
     }
   }
 
-  prestiege(){
+  prestiege(time){
+    console.log(time/1000)
     let newLayers = Math.min(26,gameState.layers + 4);
     let oldLayers = gameState.layers;
     gameState.layers = newLayers;
