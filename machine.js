@@ -35,12 +35,33 @@ class Converter extends Machine {
     this.multiplier = 3;
   }
 
+  get aps(){
+    // returns the activations per second
+    return 1000 *this.currentPower/ gameState.speed / this.speed;
+  }
+
+  get cps(){
+    // returns the convesrions per second
+    return this.aps * this.multiplier;
+  }
+
+  get tpa(){
+    // returns the time to activate once
+    return 1/this.aps
+  }
+
+
   update(ratio = 1){
     this.progress += this.currentPower* ratio;
     while (this.progress > this.speed){
       this.convert();
       this.progress -= this.speed;
     }
+    //deallocate power if no progress can be made
+    if (gameState.elements[this.tier+1].created == gameState.elements[this.tier+1].max){
+      this.deallocate(this.currentPower);
+    }
+    //remove progress if 0 power
     if (this.currentPower == 0){
       this.progress = 0;
     }
