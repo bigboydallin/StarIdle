@@ -5,6 +5,10 @@ class Machine {
     this.currentPower = 0;
   }
 
+  get full(){
+    return this.currentPower == this.maxPower;
+  }
+
   allocate(amount) {
     let total = Math.min(amount, this.maxPower - this.currentPower);
     let allocated = gameState.power.allocate(total);

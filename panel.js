@@ -230,6 +230,12 @@ class ConverterPanel extends Panel {
     };
     this.infoTexts.name = new InfoText(scene, this.x - this.width / 2 + 5, this.y, elementNameF);
     let powerF = function() {
+      if (gameState.converters[tier].full){
+        console.log(this)
+        this.text.setColor('darkgreen');
+      } else {
+        this.text.setColor(0xffffff);
+      }
       return `${gameState.converters[tier].currentPower}`
     }
     this.infoTexts.power = (new InfoText(scene, this.x - 18, this.y, powerF));
