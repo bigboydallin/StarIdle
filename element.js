@@ -39,6 +39,7 @@ class Element {
     this._count = 0;
     this._created = 0;
     this.target = 0;
+    this.powerRatio = 2**tier * (tier +1)/5120
   }
 
 

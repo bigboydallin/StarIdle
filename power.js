@@ -1,10 +1,11 @@
 class Power {
 
   constructor () {
-    this.scale = 2;
     this.max = 0;
     this.allocated = 0;
     this.unallocated = 0;
+    this.multiplier = 1;
+    this.base = 0;
     this.setPower();
   }
 
@@ -48,10 +49,12 @@ class Power {
   }
 
   setPower() {
-    let count = 10;
+    let count = this.base;
     for (let i = 0;i<gameState.layers;i++){
-      count += gameState.elements[i].ratio * this.scale**i;
+      let element = gameState.elements[i];
+      count += element.created * element.powerRatio;
     }
+    count *= this.multiplier;
     let total = Math.floor(count);
     // adjust if new total is higher
     if (total > this.max){
