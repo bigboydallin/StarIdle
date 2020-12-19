@@ -64,6 +64,14 @@ class Element {
     return this._created > 0;
   }
 
+  get power() {
+    return this.powerRatio * this.created;
+  }
+
+  get maxPower() {
+    return this.powerRatio * this.max;
+  }
+
   increment(amount) {
     //increases the count and created by amount
     if (amount > 0 && amount + this._count <= this.max) {
